@@ -1,5 +1,6 @@
 export default class Desserts {
-    constructor(name, price, amount) {
+    constructor(id,name, price, amount) {
+        this.id = id;
         this.name = name;
         this.price = parseFloat(price.replace(/[^0-9.]/g, '')).toFixed(2);
         this.amount = amount;

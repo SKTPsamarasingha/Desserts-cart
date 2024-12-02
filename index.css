@@ -10,7 +10,7 @@
 }
 
 body {
-    background-color: #FAF7F0;
+    background-color: #ffffff;
 
 }
 
@@ -28,7 +28,7 @@ main h2 {
 /*Card*/
 .card-wrapper {
     display: grid;
-    grid-template-columns: repeat(4, fit-content(6rem));
+    grid-template-columns: repeat(4, fit-content(20rem));
     grid-gap: 1rem;
 }
 
@@ -42,6 +42,8 @@ main h2 {
     width: 260px;
     object-fit: fill;
     border-radius: 15px;
+    border: 4px solid white;
+    transition: all 0.5s ease;
 }
 
 .card .btn-wrapper {
@@ -57,18 +59,30 @@ main h2 {
     padding: 10px;
     display: grid;
     transition: all 0.5s ease-in-out;
-    cursor: pointer;
+    /*cursor: pointer;*/
+    overflow: hidden;
 }
 
 .overlay, .content {
     grid-area: 1 / 1;
 }
 
+
 .overlay {
-    z-index: 1;
+    z-index: 0;
     font-family: "Red Hat Text", sans-serif;
     color: var(--primary-color);
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+
+}
+
+.overlay .fa-cart-shopping {
+    transition: all 0.7s ease-in-out;
 }
 
 .overlay i {
@@ -76,15 +90,37 @@ main h2 {
     padding: 0 10px 0 0;
 }
 
+.cartText {
+    transition: all 0.7s ease-in-out;
+}
+
+.overlay:hover .cartText {
+    transform: translateX(3rem);
+    opacity: 0;
+}
+
+.overlay:hover .fa-cart-shopping {
+    color: #4A4947;
+    transform: translateX(3rem);
+}
+
+
 .content {
     display: flex;
     justify-content: space-around;
     background-color: var(--primary-color);
-    height: 0;
-    visibility: hidden;
+    transition: all 0.5s ease-in-out;
+    max-width: 0;
+    overflow: hidden;
+    z-index: 1;
 }
 
-.content button {
+.show-content {
+    max-width: 100%;
+}
+
+.decrease,
+.increase {
     background-color: var(--primary-color);
     color: #fff;
     border: 1px solid #fff;
@@ -93,24 +129,30 @@ main h2 {
     height: 17px;
     border-radius: 50px;
     cursor: pointer;
+    overflow: hidden;
+
 }
 
 .content p {
     color: #fff;
+    transition: all 0.5s ease-in-out;
 }
 
-
-
-
-.content button:hover {
+.decrease:hover {
     background-color: #fff;
     color: var(--primary-color);
+    cursor: pointer;
+}
+
+.increase:hover {
+    background-color: #fff;
+    color: var(--primary-color);
+    cursor: pointer;
 }
 
 .text-wrapper * {
     padding: 0 0 5px 5px;
     font-family: "Red Hat Text", sans-serif;
-
 }
 
 .text-wrapper p {
@@ -186,7 +228,7 @@ main h2 {
     transform: translateX(18rem);
 }
 
-.show-item{
+.show-item {
     transform: translateX(0);
 }
 
@@ -227,6 +269,10 @@ main h2 {
     cursor: pointer;
     border: none;
     width: 1rem;
+}
+
+.cancel-btn:hover {
+    color: red;
 }
 
 /*total */
