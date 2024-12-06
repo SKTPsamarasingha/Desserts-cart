@@ -12,7 +12,7 @@ cardBtnOverLay.forEach((btn) => {
 })
 const emptyCart = document.querySelector(".empty")
 const activeCart = document.querySelector(".active")
-
+const countElm = document.querySelector(".count")
 
 // to store selected item data
 const cartList = [];
@@ -25,32 +25,68 @@ const highlightItem = (event) => {
     const btn = card.querySelector('.btn-wrapper')
     const overlay = btn.children[0]
     // cart icon animation
-    overlay.children[0].style.transform = "translateX(9rem)";
-    overlay.children[1].style.opacity = "0";
-    // changing button to show increasing and decrease btns
+    overlay.classList.add('hide-overlay');
+    // // changing button to show increasing and decrease btns
     btn.style.backgroundColor = '#e36312'
     setTimeout(() => {
-        overlay.children[0].style.visibility = "hidden";
         btn.children[1].classList.add("show-content")
     }, 500)
 
     // add border to img to show selected item
-    card.querySelector('img').style.borderColor = '#e36312'
+    const img = card.querySelector('img')
+    img.style.borderColor = '#e36312'
     card.querySelector('.amount').textContent = "1";
     emptyCart.classList.add('hide')
     activeCart.classList.add('show')
 
-
     let desserts = new Desserts(
         card.id,
         card.querySelector(".name").textContent,
+        img.src,
         card.querySelector(".price").textContent,
         card.querySelector(".amount").textContent
     )
     if (!cartList.some((item) => item.name === desserts.name)) {
         cartList.push(desserts)
+        countElm.textContent = `Your Cart (${cartList.length})`
         renderCartItem(cartList)
     }
+}
+const removeHighlight = (e) => {
+    const cartItem = e.target.classList.value === "cancel-btn" ? e.target.parentElement.id : e.target.parentElement.parentElement.id
+    const card = document.getElementById(cartItem)
+
+    if (card != null) {
+        try {
+            const index = cartList.findIndex(item => item.id === cartItem)
+            cartList.splice(index, 1)
+            countElm.textContent = `Your Cart (${cartList.length})`
+
+            const btn = card.querySelector('.btn-wrapper')
+
+            const overlay = btn.children[0]
+            // cart icon animation
+            btn.children[1].classList.remove("show-content")
+
+
+            setTimeout(() => {
+                btn.style.backgroundColor = '#FFF'
+                overlay.classList.remove('hide-overlay');
+            }, 400)
+
+            card.querySelector('img').style.borderColor = '#fff'
+            card.querySelector('.amount').textContent = "0";
+
+            if (cartList.length === 0) {
+                emptyCart.classList.remove('hide')
+                activeCart.classList.remove('show')
+            }
+        } catch (e) {
+            console.log(e.message)
+        }
+    }
+
+
 }
 
 // items in cart
@@ -107,49 +143,6 @@ cart.addEventListener("click", (e) => {
 
 });
 
-const removeHighlight = (e) => {
-    const cartItem = e.target.classList.value === "cancel-btn" ? e.target.parentElement.id : e.target.parentElement.parentElement.id
-    const card = document.getElementById(cartItem)
-
-    if (card != null) {
-        try {
-            const index = cartList.findIndex(item => item.id === cartItem)
-            cartList.splice(index, 1)
-
-            const btn = card.querySelector('.btn-wrapper')
-
-            const overlay = btn.children[0]
-            // cart icon animation
-            // changing button to show increasing and decrease btns
-            btn.children[1].classList.remove("show-content")
-
-
-            setTimeout(() => {
-                btn.style.backgroundColor = '#FFF'
-                overlay.children[0].style.transform = "translateX(0rem)";
-                overlay.children[1].style.opacity = "1";
-                overlay.children[0].style.visibility = "visible";
-            }, 400)
-
-            card.querySelector('img').style.borderColor = '#fff'
-            card.querySelector('.amount').textContent = "0";
-        } catch (e) {
-            console.log(e.message)
-        }
-    }
-
-
-//
-//
-
-// //
-// //     // add border to img to show selected item
-
-//     emptyCart.classList.remove('hide')
-//     activeCart.classList.remove('show')
-//
-}
-
 
 const removeItemFromCart = (e) => {
     let target = e.target;
@@ -161,8 +154,12 @@ const removeItemFromCart = (e) => {
             target.classList.remove('show-item');
 
             setTimeout(() => {
-                target.remove();
+                target.remove()
+                updateTotal();
+
             }, 500)
+
+
         }
 
     } catch (e) {
@@ -184,7 +181,11 @@ const increaseAmount = (event) => {
     const name = event.target.closest('.card').querySelector('.name').textContent
     const items = document.querySelectorAll('.item')
     const amountTxt = event.target.closest('.card').querySelector('.amount');
-
+    cartList.forEach((cartItem) => {
+        if (cartItem.name === name) {
+            cartItem.increaseAmount();
+        }
+    })
     items.forEach((item) => {
         let cartName = item.querySelector(".title").textContent;
         let amountElm = item.querySelector('.amount');
@@ -210,6 +211,11 @@ const decreaseAmount = (event) => {
     const amountTxt = event.target.closest('.card').querySelector('.amount');
 
     const items = document.querySelectorAll('.item')
+    cartList.forEach((cartItem) => {
+        if (cartItem.name === name) {
+            cartItem.decreaseAmount();
+        }
+    })
     items.forEach((item) => {
         let cartName = item.querySelector(".title").textContent;
         let amountElm = item.querySelector('.amount');
@@ -242,6 +248,46 @@ function updateTotal() {
         total += number;
         totalElm.textContent = `${total}$`
     })
+    return total;
 }
 
+const confirmBtn = document.querySelector('.order-confirm')
+const orderWrapper = document.querySelector('.order-wrapper')
+const modelTotal = document.querySelector('.total-order')
+const orderModel = document.querySelector('.order-model')
+const closeBtn = document.querySelector('.close-btn')
 
+closeBtn.addEventListener('click', () => {
+    orderModel.classList.remove('show-model')
+})
+
+confirmBtn.addEventListener('click', () => {
+    cardBtnOverLay.forEach((btn)=>{
+        btn.removeEventListener('click', (e) => {
+        })
+    })
+    orderModel.classList.add('show-model')
+    orderWrapper.innerHTML = renderOrders(cartList)
+    modelTotal.textContent = `$${updateTotal().toString()}`
+})
+
+const renderOrders = (orderList) => {
+    let items = orderList.map((item) => {
+        return `<div class="order-item">
+                <div class="order-content">
+                    <img src="${item.img}" alt="order-item">
+
+                    <div class="order-text">
+                        <p class="order-name">${item.name}</p>
+                        <p class="order-amount">${item.amount}x</p>
+                        <p class="order-price"> @ ${item.price}</p>
+                    </div>
+                </div>
+                <div class="order-subtotal">
+                    <h3>$ ${item.subtotal}</h3>
+                </div>
+            </div>`
+    })
+    items = items.join("");
+    return items
+}

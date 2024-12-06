@@ -1,7 +1,8 @@
 export default class Desserts {
-    constructor(id,name, price, amount) {
+    constructor(id, name, img, price, amount) {
         this.id = id;
         this.name = name;
+        this.img = img;
         this.price = parseFloat(price.replace(/[^0-9.]/g, '')).toFixed(2);
         this.amount = amount;
         this.subtotal = parseFloat(this.amount * this.price).toFixed(2)

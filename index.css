@@ -1,6 +1,6 @@
 :root {
     --primary-color: #e36312;
-    --secondary-color: #B7B7B7;
+    --secondary-color: #888383;
 }
 
 * {
@@ -10,7 +10,6 @@
 }
 
 body {
-    background-color: #ffffff;
 
 }
 
@@ -18,10 +17,11 @@ main {
     margin: 4rem;
     display: flex;
     gap: 1.5rem;
+
 }
 
 main h2 {
-    margin: 2rem 0;
+    /*margin: 2rem 0;*/
     position: relative;
 }
 
@@ -104,6 +104,9 @@ main h2 {
     transform: translateX(3rem);
 }
 
+.hide-overlay {
+    transform: translateX(9rem);
+}
 
 .content {
     display: flex;
@@ -179,29 +182,33 @@ main h2 {
 
 }
 
-/*transition dont work*/
 .empty {
     max-height: fit-content;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .active {
-    max-height: 0;
+    height: fit-content;
     overflow: hidden;
     transition: all 0.5s ease-in-out;
 }
 
 .hide {
-    max-height: 0;
+    display: none;
 }
 
 .show {
-    max-height: fit-content;
+    display: block;
 }
 
 .empty p {
     color: #8D493A;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 500;
     margin: 1rem 0 1rem 1.5rem;
 }
 
@@ -215,7 +222,6 @@ main h2 {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-
 }
 
 
@@ -297,13 +303,161 @@ main h2 {
     height: 2.3rem;
     border-radius: 50px;
     font-family: "Red Hat Text", sans-serif;
-    background-color: transparent;
-    border: 2px solid var(--secondary-color);
-    color: var(--primary-color);
-    transition: color 0.5s ease-in-out;
+    color: #FFFFFF;
+    background-color: var(--secondary-color);
+    transition: background-color 0.3s ease-in-out;
+    border: none;
+    position: relative;
+    left: 0.8rem;
 }
 
 .order-confirm:hover {
     color: #fff;
-    background-color: #8D493A;
+    background-color: var(--primary-color);
+}
+
+/*order confirm model*/
+.order-model {
+    width: 35em;
+    height: fit-content;
+    border: 1px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 1.5rem;
+    background-color: #FFF;
+    font-family: "Red Hat Text", sans-serif;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 30rem;
+    top: -35rem;
+    transition: all 0.5s ease-in-out;
+    z-index: 1;
+    scale: 0.1%;
+}
+
+.show-model {
+    top: 1rem;
+    scale: 100%;
+}
+
+.order-model img {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.order-model h2 {
+    color: #290901;
+}
+
+.order-p {
+    color: var(--secondary-color);
+}
+
+/*Order model*/
+.order-wrapper {
+    border-radius: 15px;
+    height: fit-content;
+    width: fit-content;
+    margin-top: 1rem;
+    background-color: #f8f7f5;
+    transition: all 0.5s ease;
+}
+
+.icon-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.1rem;
+    height: 6.5rem;
+    width: 32rem;
+}
+
+.close-btn {
+    background-color: transparent;
+    border: none;
+    color: darkblue;
+    transition: color 0.5s ease;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: red;
+}
+
+.order-content {
+    display: flex;
+}
+
+.order-content img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 10px;
+}
+
+
+.order-text {
+    margin-left: 1rem;
+}
+
+.order-text * {
+    font-size: 0.9rem;
+}
+
+.order-name {
+    margin-bottom: 1rem;
+    margin-top: 0.2rem;
+    font-weight: 600;
+    color: #4a0f02;
+}
+
+.order-amount {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.order-price {
+    position: relative;
+    left: 2rem;
+    top: -1.2rem;
+    color: var(--secondary-color);
+}
+
+.order-subtotal {
+    position: relative;
+    top: 1.5rem;
+}
+
+.order-subtotal h3 {
+    color: #4a0f02;
+    font-size: 15px;
+}
+
+/*Order Total*/
+.order-total {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.1rem;
+    font-size: 15px;
+    width: 32rem;
+    border-radius: 15px;
+
+}
+
+.order-total p {
+    font-weight: 600;
+}
+
+.new-order-btn {
+    background-color: var(--primary-color);
+    height: 3rem;
+    margin-top: 0.5rem;
+    border: none;
+    border-radius: 20px;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    color: #FFF;
 }

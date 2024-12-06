@@ -15,8 +15,9 @@
           rel="stylesheet">
 </head>
 <body>
-<main>
-    <!--    <h2>Desserts</h2>-->
+
+<main class="main">
+
     <div class="card-wrapper">
 
         <div class="card" id="1">
@@ -105,14 +106,15 @@
 
 
     </div>
-
     <div class="cart-wrapper">
-        <h3 class="count">Your Cart</h3>
+        <h3 class="count">Your Cart (0)</h3>
 
         <div class="empty">
+            <img src="./assets/images/illustration-empty-cart.svg" alt="">
+
             <p>Your Added item will appear here</p>
         </div>
-        <div class="active">
+        <div class="active hide">
             <div class="item-wrapper">
 
             </div>
@@ -124,7 +126,30 @@
             <button class="order-confirm">Confirm Order</button>
         </div>
     </div>
+
+    <div class="order-model ">
+        <div class="icon-wrapper">
+            <img src="assets/images/icon-order-confirmed.svg" alt="confirm icon">
+            <button class="fa-solid fa-x close-btn">
+            </button>
+        </div>
+        <h2>Order Confirmed</h2>
+        <p class="order-p">We hope you enjoy your food!</p>
+        <div class="order-wrapper">
+
+        </div>
+        <div class="order-total">
+            <p>Order Total</p>
+            <h4 class="total-order">$</h4>
+        </div>
+
+        <button class="new-order-btn">Start New Order</button>
+
+    </div>
+
+
 </main>
+
 <script type="module" src="index.js"></script>
 
 
