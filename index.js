@@ -256,16 +256,23 @@ const orderWrapper = document.querySelector('.order-wrapper')
 const modelTotal = document.querySelector('.total-order')
 const orderModel = document.querySelector('.order-model')
 const closeBtn = document.querySelector('.close-btn')
+const cardWrapper = document.querySelector('.card-wrapper')
+const cartWrapper = document.querySelector('.cart-wrapper')
 
 closeBtn.addEventListener('click', () => {
     orderModel.classList.remove('show-model')
+    cardWrapper.classList.remove('blur-wrapper')
+    cartWrapper.classList.remove('blur-wrapper')
+
 })
 
 confirmBtn.addEventListener('click', () => {
-    cardBtnOverLay.forEach((btn)=>{
-        btn.removeEventListener('click', (e) => {
-        })
-    })
+    cardBtnOverLay.forEach((btn) => {
+        cardWrapper.classList.add('blur-wrapper')
+        cartWrapper.classList.add('blur-wrapper')
+
+
+    });
     orderModel.classList.add('show-model')
     orderWrapper.innerHTML = renderOrders(cartList)
     modelTotal.textContent = `$${updateTotal().toString()}`

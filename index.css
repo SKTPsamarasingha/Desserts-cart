@@ -30,6 +30,11 @@ main h2 {
     display: grid;
     grid-template-columns: repeat(4, fit-content(20rem));
     grid-gap: 1rem;
+    transition: all 0.5s ease-in-out;
+}
+
+.blur-wrapper {
+    filter: blur(10px);
 }
 
 .card {
@@ -179,6 +184,7 @@ main h2 {
     background-color: #FFF;
     border-radius: 15px;
     font-family: "Red Hat Text", sans-serif;
+    transition: all 0.5s ease-in-out;
 
 }
 
